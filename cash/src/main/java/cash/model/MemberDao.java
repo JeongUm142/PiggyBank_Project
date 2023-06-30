@@ -105,6 +105,35 @@ public class MemberDao {
 		return returnMember;
 	}
 	
+	// 회원정보 수정
+	public int modifyMember(String memberId, String memberUpdatePw) {
+		int row = 0;
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "UPDATE member SET member_pw = PASSWORD(?) WHERE member_id=?";
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/Cash", "root", "java1234");
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberUpdatePw);
+			stmt.setString(2, memberId);
+			row = stmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return row;
+	}
+	
 	// 회원 탈퇴
 	public int removeMember(String memberId, String memberPw) {
 		int row = 0;
