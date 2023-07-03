@@ -4,9 +4,11 @@ import java.util.Objects;
 
 public class Cashbook {
 	private int cashbookNo;
+	private int memberId;
 	private String category;
 	private String cashbookDate;
 	private int price;
+	private String memo;
 	private String updatedate;
 	private String createdate;
 	
@@ -14,14 +16,16 @@ public class Cashbook {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Cashbook(int cashbookNo, String category, String cashbookDate, int price, String updatedate,
-			String createdate) {
+
+	public Cashbook(int cashbookNo, int memberId, String category, String cashbookDate, int price, String memo,
+			String updatedate, String createdate) {
 		super();
 		this.cashbookNo = cashbookNo;
+		this.memberId = memberId;
 		this.category = category;
 		this.cashbookDate = cashbookDate;
 		this.price = price;
+		this.memo = memo;
 		this.updatedate = updatedate;
 		this.createdate = createdate;
 	}
@@ -63,10 +67,27 @@ public class Cashbook {
 		this.createdate = createdate;
 	}
 	
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
 	@Override
 	public String toString() {
-		return "Cashbook [cashbookNo=" + cashbookNo + ", category=" + category + ", cashbookDate=" + cashbookDate
-				+ ", price=" + price + ", updatedate=" + updatedate + ", createdate=" + createdate + "]";
+		return "Cashbook [cashbookNo=" + cashbookNo + ", memberId=" + memberId + ", category=" + category
+				+ ", cashbookDate=" + cashbookDate + ", price=" + price + ", memo=" + memo + ", updatedate="
+				+ updatedate + ", createdate=" + createdate + "]";
 	}
-	
+
 }

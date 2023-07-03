@@ -13,6 +13,13 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+table td > div:nth-child(2){
+	position: relative;
+	overflow-y: auto;
+	width: 160px;
+	height: 80px;
+}
+
 .container,
 .container-fluid,
 .container-xxl,
@@ -43,10 +50,20 @@ body {
   	align-items: center;
 }
 
-.form-wrapper {
-     display: flex;
-     justify-content: center;
-     align-items: center;
+.nonedeco a{
+	text-decoration: none;
+	color: black;
 }
 
+.form-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
+	font-size: 40px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
 
