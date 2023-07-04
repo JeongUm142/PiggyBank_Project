@@ -21,6 +21,7 @@ public class memberOneController extends HttpServlet {
     		response.sendRedirect(request.getContextPath() + "/login");
     		return;
     	}
+		
 		Member loginMember = (Member)session.getAttribute("loginMember");
 			//System.out.println(loginMember);
 		

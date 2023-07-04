@@ -2,17 +2,17 @@ package cash.vo;
 
 import java.util.Objects;
 
-public class Hastag {
+public class Hashtag {
 	private int cashbookNo;
 	private String word;
 	private String updatedate;
 	private String createdate;
 	
-	public Hastag() {
+	public Hashtag() {
 		super(); // 부모
 	}
 	
-	public Hastag(int cashbookNo, String word, String updatedate, String createdate) {
+	public Hashtag(int cashbookNo, String word, String updatedate, String createdate) {
 		super();
 		this.cashbookNo = cashbookNo;
 		this.word = word;

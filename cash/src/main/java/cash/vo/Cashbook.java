@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Cashbook {
 	private int cashbookNo;
-	private int memberId;
+	private String memberId;
 	private String category;
 	private String cashbookDate;
 	private int price;
@@ -17,7 +17,7 @@ public class Cashbook {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cashbook(int cashbookNo, int memberId, String category, String cashbookDate, int price, String memo,
+	public Cashbook(int cashbookNo, String memberId, String category, String cashbookDate, int price, String memo,
 			String updatedate, String createdate) {
 		super();
 		this.cashbookNo = cashbookNo;
@@ -67,11 +67,11 @@ public class Cashbook {
 		this.createdate = createdate;
 	}
 	
-	public int getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
 
-	public void setMemberId(int memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
