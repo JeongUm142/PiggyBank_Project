@@ -68,7 +68,6 @@ public class CashbookController extends HttpServlet {
 		// 마지막 날짜 출력 후 공백 수 -> 전체 출력 셀의 수가 7로 나누어 떨어짐
 		int endBlank = 0;
 		
-		
 		if((beginBlank + lastDate) % 7 != 0) {
 			endBlank = 7- ((beginBlank + lastDate) % 7);
 			System.out.println(endBlank + "<-endBlank");
@@ -79,7 +78,12 @@ public class CashbookController extends HttpServlet {
 		// 모델을 호출(DAO 타켓 월의 수업/지출 데이터
 		CashbookDao cashbookDao = new CashbookDao();
 		List<Cashbook> list = cashbookDao.selectCashbookListByMonth(member.getMemberId(), targetYear, targetMonth + 1);
+		// 이달의 전체 수입
+		int incomeTotal = cashbookDao.sumIncomeCashByMonth(member.getMemberId(), targetYear, targetMonth + 1);
+		// 이달의 전체 지출
+		int spendTotal = cashbookDao.sumSpendCashByMonth(member.getMemberId(), targetYear, targetMonth + 1);
 		
+		// 해시태그
 		HashtagDao hashtagDao = new HashtagDao();
 		List<Map<String, Object>> htList = hashtagDao.selectWordCountByMonth(member.getMemberId(), targetYear, targetMonth + 1);
 		
@@ -95,6 +99,8 @@ public class CashbookController extends HttpServlet {
 		request.setAttribute("endBlank", endBlank);
 		request.setAttribute("list", list);
 		request.setAttribute("htList", htList);
+		request.setAttribute("incomeTotal", incomeTotal);
+		request.setAttribute("spendTotal", spendTotal);
 		
 		// 이번달 달력에 가계부목록의 모델값을 셋팅
     	request.getRequestDispatcher("/WEB-INF/view/cashbook.jsp").forward(request, response);

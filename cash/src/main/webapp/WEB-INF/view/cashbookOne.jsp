@@ -18,8 +18,31 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<!-- 상단 -->
+<div class="info-top">
+	<a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-success">로그아웃</a>
+	<a href="${pageContext.request.contextPath}/memberOne" class="btn btn-outline-success">회원정보</a>
+	<a href="${pageContext.request.contextPath}/cashbook?targetYear=${targetYear}&targetMonth=${targetMonth-1}" class="btn btn-outline-success">캘린더</a>
+</div>
+<!-- 해시태그 -->
+<div class="info">
+	<h3>이달의 해시태그</h3>
+	<div class="hastag">
+		<c:forEach var="m" items="${htList}">
+			<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}">#${m.word}(${m.cnt})</a>
+		</c:forEach>
+	</div>
+</div>
+<!-- 수입/지출 -->
+<div class="total">
+	<h3>오늘의 총 수입</h3>
+	<div style="color:#4380C8"><fmt:formatNumber value="${incomeTotalToday}" pattern="###,###,###"/>원</div>
+	<hr>
+	<h3>오늘의 총 지출</h3>
+	<div style="color:#D980C8"><fmt:formatNumber value="${spendTotalToday}" pattern="###,###,###"/>원</div>
+</div>
+
 <div class="container center">	
-	
 	<!-- 추가 -->
 	<div class="addtable">
 		<div class="title">${targetYear}년 ${targetMonth}월 ${date}일의 소비 내역을 입력해주세요!</div>
@@ -41,7 +64,7 @@
 								<option>지출</option>
 						</select>
 					</td>
-					<td><input type="number" name="price" class="form-check form-control"></td>
+					<td><input type="number" name="price" class="form-check form-control" min="1" ></td>
 					<td><input type="text" name="memo" placeholder="해시태그(#) 입력 가능" class="form-check form-control"></td>
 				</tr>
 			</table>
@@ -54,7 +77,7 @@
 				<td>카테고리</td>
 				<td>날짜</td>
 				<td>금액</td>
-				<td>메모</td>
+				<td class="w40">메모</td>
 				<td>작성일</td>
 				<td>수정일</td>
 			</tr>
@@ -64,10 +87,10 @@
 					<td>${c.cashbookDate}</td>
 					<td>
 						<c:if test="${c.category == '수입'}">
-							<span style="color:blue">+ <fmt:formatNumber value="${c.price}" pattern="###,###"/></span>
+							<span style="color:#4380C8">+ <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
 						</c:if>
 						<c:if test="${c.category == '지출'}">
-							<span style="color:red">- <fmt:formatNumber value="${c.price}" pattern="###,###"/></span>
+							<span style="color:#D980C8">- <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
 						</c:if>
 					</td>
 					<td>${c.memo}</td>
@@ -77,7 +100,8 @@
 				</c:forEach>
 		</table>	
 	</div>
-	<a href="${pageContext.request.contextPath}/cashbook?targetYear=${targetYear}&targetMonth=${targetMonth-1}" class="btn btn-success">이전</a>
+	
+	<!-- 페이징  -->
 </div>
 </body>
 </html>

@@ -22,16 +22,27 @@
 	<div>
 	<a href="${pageContext.request.contextPath}/logout" class="btn btn-success">로그아웃</a>
 	<a href="${pageContext.request.contextPath}/memberOne" class="btn btn-success">회원정보</a>
-	<div >
+	</div>
+	<div>
 		<h3>이달의 해시태그</h3>
 		<div class="hastag">
 			<c:forEach var="m" items="${htList}">
-				<a href="${pageContext.request.contextPath}">#${m.word}(${m.cnt})</a>
+				<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}">#${m.word}(${m.cnt})</a>
 			</c:forEach>
 		</div>
 	</div>
-	</div>
 </div>
+	<div class="total">
+		<h3>이달 총 수입</h3>
+		<div style="color:#4380C8">
+			<fmt:formatNumber value="${incomeTotal}" pattern="###,###,###"/>원
+		</div>
+		<hr>
+		<h3>이달 총 지출</h3>
+		<div style="color:#D980C8">
+			<fmt:formatNumber value="${spendTotal}" pattern="###,###,###"/>원
+		</div>
+	</div>
 <div class="container">
 	<div class="center title nonedeco">
 		<a href="${pageContext.request.contextPath}/cashbook?targetYear=${targetYear}&targetMonth=${targetMonth - 1}">≪ &nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -106,10 +117,10 @@
 									<c:if test="${date == fn:substring(c.cashbookDate, 8, 10)}">
 										<div>
 											<c:if test="${c.category == '수입'}">
-												<span>+ <fmt:formatNumber value="${c.price}" pattern="###,###"/></span>
+												<span style="color:#4380C8">+ <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
 											</c:if>
 											<c:if test="${c.category == '지출'}">
-												<span style="color:red">- <fmt:formatNumber value="${c.price}" pattern="###,###"/></span>
+												<span style="color:#D980C8">- <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
 											</c:if>
 										</div>
 									</c:if>
