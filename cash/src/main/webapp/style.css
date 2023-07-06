@@ -43,12 +43,6 @@ table td > div:nth-child(2){
 .w40{
 	width: 40%;
 }
-.login{
-	position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 .center {
 	text-align: center;
 	justify-content: center;
@@ -58,16 +52,95 @@ table td > div:nth-child(2){
 	text-decoration: none;
 	color: black;
 }
-.form-wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
 .title {
 	font-size: 35px;
 	margin-top: 30px;
 	margin-bottom: 30px;
 }
+.form-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/*로그인*/
+.login{
+	position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*회원정보 및 비밀번호 수정*/
+.myPage{
+	margin: 180px auto;	
+}
+.myPage h1{
+	margin-bottom: 40px;
+}
+.profile{
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+}
+.profile img{
+	width: 200px;
+}
+.profile > div {
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: calc(50% - 250px);
+    width: 500px;
+}
+.profile .title{
+	width: 500px;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	font-size: 40px;
+	font-weight: bold;
+	margin-top: 20px;
+}
+.password{
+	font-size: 20px;
+	text-align: right;
+}
+.password div a{
+	width: 130px;
+	color:#333;
+}
+.password > div a + a {
+	margin-left: 10px;
+}
+
+/*로그아웃, 회원정보 등 상단, 왼쪽 버튼*/
+.info{
+	position: absolute;
+	text-align: center;
+	top: 30%;
+	left: 50px;
+}
+.info .btn{
+	width: 100px;
+	margin-bottom: 10px;
+}
+.info-top {
+	position: relative;
+	text-align: center;
+	width: 700px;
+	top: 20px;
+	left: calc(50% - 350px);
+}
+.info-top .btn{
+	width: 200px;
+	margin-bottom: 10px;
+	color: black;
+}
+
+/*캐시 추가*/
 .addtable{
 	position: relative; /*부모*/
 	text-align: center;
@@ -108,11 +181,8 @@ table td > div:nth-child(2){
 	width: 300px;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
 }
-.today-total{
-	position: absolute;
-	right: 10%;
-	text-align:	center;
-}
+
+/*테이블*/
 .list{
 	width: 100%;
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -125,34 +195,14 @@ table td > div:nth-child(2){
 .list tr:hover{
 	background-color: #E0FDDC;
 }
-.info{
-	position: absolute;
-	text-align: center;
-	top: 30%;
-	left: 50px;
-}
-.info .btn{
-	width: 100px;
-	margin-bottom: 10px;
-}
-.info-top {
-	position: relative;
-	text-align: center;
-	width: 700px;
-	top: 20px;
-	left: calc(50% - 350px);
-}
-.info-top .btn{
-	width: 200px;
-	margin-bottom: 10px;
-	color: black;
-}
+
+/*홈 해시태그*/
 .hastag{
 	display: flex;
 	flex-wrap: wrap;
 	text-align: center;
 	position: absolute;
-	left: calc(50% - 70px);
+	left: calc(50% - 80px);
 	overflow-y: auto;
 	width: 170px;
 	height: 300px;
@@ -163,6 +213,8 @@ table td > div:nth-child(2){
 	text-decoration: none;
 	font-style: italic;
 }
+
+/*수입, 지출(오른쪽 정렬)*/
 .total{
 	text-align: center;
 	position: fixed;
@@ -174,6 +226,8 @@ table td > div:nth-child(2){
 .total div{
 	font-size: 30px;
 }
+
+/*태그 클릭시 보여질 리스트*/
 .taglist{
 	color: #07B875;
 	font-size: 70px;
@@ -202,7 +256,7 @@ table td > div:nth-child(2){
 .taglist-hastag > div div:hover{
 	background-color: #949494;
 }
-.taglist-hastag > div div+div{
+.taglist-hastag > div div+div{/*div중 가장 첫 div*/
 	margin-left: 10px;
 }
 .taglist-hastag a{

@@ -20,11 +20,13 @@ public class removeMemberController extends HttpServlet {
 		if(session.getAttribute("loginMember") == null) {
     		response.sendRedirect(request.getContextPath() + "/login");
     		return;
+    		
     	}
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		MemberDao memberDao = new MemberDao();
 		Member member = memberDao.selectMemberOne(loginMember.getMemberId());
-		request.setAttribute("member", member);
+		String id = member.getMemberId();
+		request.setAttribute("id", id);
 		request.getRequestDispatcher("/WEB-INF/view/removeMember.jsp").forward(request, response);
 	}
 	

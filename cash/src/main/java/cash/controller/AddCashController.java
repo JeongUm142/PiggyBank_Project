@@ -40,23 +40,34 @@ public class AddCashController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/login");
 			return;
 		}
+		
 		Member member = (Member)session.getAttribute("loginMember");
 		
-		// request 매개값
+		// request 매개값 변수 날짜
 		int targetYear = Integer.parseInt(request.getParameter("targetYear"));
 		int targetMonth = Integer.parseInt(request.getParameter("targetMonth"));
 		int date = Integer.parseInt(request.getParameter("date"));
-		String category = request.getParameter("category");
-		int price = Integer.parseInt(request.getParameter("price"));
 		String cashbookdate = targetYear + "-" + targetMonth + "-" + date ;
-		String memo = request.getParameter("memo");
 			System.out.println(targetYear + "<-targetYear");
 			System.out.println(targetMonth + "<-targetMonth");
 			System.out.println(date + "<-date");
+			System.out.println(cashbookdate + "<-cashbookdate");
+
+		
+		// 유효성검사 
+		if(request.getParameter("price") == null 
+			|| request.getParameter("memo") == null) {
+			response.sendRedirect(request.getContextPath() + "/cashbookOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&date=" + date);
+			return;
+		}
+		
+		// 변수 입력값
+		String category = request.getParameter("category");
+		int price = Integer.parseInt(request.getParameter("price"));
+		String memo = request.getParameter("memo");
 			System.out.println(category + "<-category");
 			System.out.println(memo + "<-memo");
 			System.out.println(price + "<-price");
-			System.out.println(cashbookdate + "<-cashbookdate");
 			
 		//hashtag와 메모를 구분하기 위한 if
 		String memo2 = memo.replace("#", " #"); // 메모에 있는 #를 공백#로 변경

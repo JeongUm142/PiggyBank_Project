@@ -1,21 +1,38 @@
 <%@page import="cash.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	//setAttribute("member", member);을 가져오기 위해 request
-	Member member = (Member)request.getAttribute("member"); 
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>memberOne</title>
 </head>
-<body>
-	<h1>회원 정보</h1>
-	<div>아이디 : <%=member.getMemberId()%></div>
-	<div>비밀번호 : **** </div>
-	<a href="${pageContext.request.contextPath}/modifyMember">회원정보수정</a>
-	<a href="${pageContext.request.contextPath}/removeMember">회원탈퇴</a>
+	<!-- css파일 -->
+	<link href="<%=request.getContextPath() %>/style.css" type="text/css" rel="stylesheet">
 	
+	<!-- Latest compiled and minified CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<body>
+<!-- 상단 -->
+<div class="info-top">
+	<a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-success">로그아웃</a>
+	<a href="${pageContext.request.contextPath}/memberOne" class="btn btn-outline-success">회원정보</a>
+	<a href="${pageContext.request.contextPath}/cashbook" class="btn btn-outline-success">캘린더</a>
+</div>
+<div class="container center myPage">
+	<h1>마이페이지</h1>
+	<div class="profile">
+		<div>
+			<img src="${pageContext.request.contextPath}/img/profile.png">
+			<div class="title">${id}</div>
+			<div class="password nonedeco">
+				<div>
+					<a href="${pageContext.request.contextPath}/modifyPassword" class="btn btn-success">비밀번호 수정</a>
+					<a href="${pageContext.request.contextPath}/removeMember" class="btn btn-success">회원탈퇴</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

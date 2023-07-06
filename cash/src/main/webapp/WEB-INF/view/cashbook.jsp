@@ -24,7 +24,7 @@
 	<a href="${pageContext.request.contextPath}/memberOne" class="btn btn-success">회원정보</a>
 	</div>
 	<div>
-		<h3>이달의 해시태그</h3>
+		<h3>#이달의 해시태그</h3>
 		<div class="hastag">
 			<c:forEach var="m" items="${htList}">
 				<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}">#${m.word}(${m.cnt})</a>

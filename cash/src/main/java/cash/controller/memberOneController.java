@@ -28,11 +28,12 @@ public class memberOneController extends HttpServlet {
 		// 모델 값 구하기
 		MemberDao memberDao = new MemberDao();
 		Member member = memberDao.selectMemberOne(loginMember.getMemberId());
-			//System.out.println(member);
+		String id = member.getMemberId();
 		
 		// member 출력하는(포워딩대상) memberOne.jsp에도 공유되어야 한다
 		// request가 공유되니까 request와 함께 공유
-		request.setAttribute("member", member);
+		request.setAttribute("id", id);
+		
 		
 		// memberOne.jsp 포워딩
 		request.getRequestDispatcher("/WEB-INF/view/memberOne.jsp").forward(request, response);

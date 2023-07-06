@@ -39,6 +39,13 @@ public class AddMemberController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login");	
 		}
 		
+		// 유효성검사 
+		if(request.getParameter("memberId") == null 
+			|| request.getParameter("memberPw") == null) {
+			response.sendRedirect(request.getContextPath() + "/addMember");
+			return;
+		}
+		
 		// request.getParameter()
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");

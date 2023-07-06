@@ -26,7 +26,7 @@
 </div>
 <!-- 해시태그 -->
 <div class="info">
-	<h3>이달의 해시태그</h3>
+	<h3>#이달의 해시태그</h3>
 	<div class="hastag">
 		<c:forEach var="m" items="${htList}">
 			<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}">#${m.word}(${m.cnt})</a>
@@ -59,13 +59,12 @@
 				<tr>
 					<td>
 						<select name="category" class="form-check form-control">
-								<option disabled selected>선택해주세요</option>
 								<option>수입</option>
 								<option>지출</option>
 						</select>
 					</td>
-					<td><input type="number" name="price" class="form-check form-control" min="1" ></td>
-					<td><input type="text" name="memo" placeholder="해시태그(#) 입력 가능" class="form-check form-control"></td>
+					<td><input type="number" name="price" class="form-check form-control" min="1" required="required"></td>
+					<td><input type="text" name="memo" placeholder="해시태그(#) 입력 가능" class="form-check form-control" required="required"></td>
 				</tr>
 			</table>
 			<button type="submit" class="btn btn-success">추가하기</button>
