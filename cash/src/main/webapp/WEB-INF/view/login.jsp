@@ -18,10 +18,19 @@
 		<form method="post" action="${pageContext.request.contextPath}/login">
 			<table class="loginTable">
 				<tr>
-					<td><input type="text" name="memberId" placeholder="Enter ID" class="form-check form-control form-control-sm"></td>
+					<td>
+						<input type="text" name="memberId" value="${loginMember}" placeholder="Enter Id" class="form-check form-control form-control-sm">
+					</td>
 				</tr>
 				<tr>
-					<td><input type="password" name="memberPw" placeholder="Enter PassWord" class="form-check form-control form-control-sm"></td>
+					<td>
+						<input type="password" name="memberPw" placeholder="Enter PassWord" class="form-check form-control form-control-sm">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="checkbox" name="idSave" value="Y"> 아이디 저장
+					</td>	
 				</tr>
 			</table>
 			<br>
