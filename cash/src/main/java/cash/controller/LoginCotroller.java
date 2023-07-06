@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +21,18 @@ public class LoginCotroller extends HttpServlet {
     	HttpSession session = request.getSession();
     	if(session.getAttribute("loginMember") != null) {
     		response.sendRedirect(request.getContextPath() + "/cashbook");
+    		return;
     	}
-    	
+		// 쿠키에 저장된 로그인 성공 id가 있다면 request속성에 저장
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			for(Cookie c: cookies) {
+				if(c.getName().equals("loginMember")) {
+					request.setAttribute("loginMember", c.getValue());
+						System.out.println();
+				}
+			}
+		}
     	request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
 	}
     @Override
@@ -45,6 +56,14 @@ public class LoginCotroller extends HttpServlet {
 		//로그인 성공
 		HttpSession session = request.getSession();
 		session.setAttribute("loginMember", loginMember);
+		String idSave = request.getParameter("idSave");
+			System.out.println(idSave);
+		if(idSave != null){
+			Cookie loginIdCookie = new Cookie("loginMember", memberId); // 맵의 한 종류로 프로포티즈의 자식
+			loginIdCookie.setMaxAge(60); // 초단위로 계산값을 적어야함/ 결과 XX
+			loginIdCookie.setPath("/");
+			response.addCookie(loginIdCookie);
+		}
 		response.sendRedirect(request.getContextPath() + "/cashbook");
 		}
 
