@@ -7,7 +7,7 @@
 <title>memberOne</title>
 </head>
 	<!-- css파일 -->
-	<link href="<%=request.getContextPath() %>/style.css" type="text/css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
 	
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">

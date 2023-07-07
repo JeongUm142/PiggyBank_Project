@@ -12,7 +12,7 @@ import cash.model.MemberDao;
 import cash.vo.Member;
 
 @WebServlet("/removeMember")
-public class removeMemberController extends HttpServlet {
+public class RemoveMemberController extends HttpServlet {
 	@Override
 	// 비밀번호 입력 폼
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,13 +20,14 @@ public class removeMemberController extends HttpServlet {
 		if(session.getAttribute("loginMember") == null) {
     		response.sendRedirect(request.getContextPath() + "/login");
     		return;
-    		
     	}
+		
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		MemberDao memberDao = new MemberDao();
 		Member member = memberDao.selectMemberOne(loginMember.getMemberId());
 		String id = member.getMemberId();
 		request.setAttribute("id", id);
+		
 		request.getRequestDispatcher("/WEB-INF/view/removeMember.jsp").forward(request, response);
 	}
 	
@@ -34,6 +35,11 @@ public class removeMemberController extends HttpServlet {
 	// 탈퇴
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		if(session.getAttribute("loginMember") == null) {
+    		response.sendRedirect(request.getContextPath() + "/login");
+    		return;
+    	}
+		
 		Member loginMember = (Member)session.getAttribute("loginMember");
 			System.out.println(loginMember+"<--loginMember");
 		

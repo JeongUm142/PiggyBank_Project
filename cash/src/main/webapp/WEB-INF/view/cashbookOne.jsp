@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>상세보기</title>
 	<!-- css파일 -->
-	<link href="<%=request.getContextPath() %>/style.css" type="text/css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
 	
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">
@@ -71,33 +71,43 @@
 		</form>
 	</div>
 	<div class="list">
-		<table class="table table-bordered">
-			<tr class="title">
-				<td>카테고리</td>
-				<td>날짜</td>
-				<td>금액</td>
-				<td class="w40">메모</td>
-				<td>작성일</td>
-				<td>수정일</td>
-			</tr>
-				<c:forEach var="c" items="${list}">
-				<tr>
-					<td>${c.category}</td>
-					<td>${c.cashbookDate}</td>
-					<td>
-						<c:if test="${c.category == '수입'}">
-							<span style="color:#4380C8">+ <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
-						</c:if>
-						<c:if test="${c.category == '지출'}">
-							<span style="color:#D980C8">- <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
-						</c:if>
-					</td>
-					<td>${c.memo}</td>
-					<td>${fn:substring(c.createdate,0,11)}</td>
-					<td>${fn:substring(c.updatedate,0,11)}</td>
+		<form action="${pageContext.request.contextPath}/removeCash" method="post">
+			<input type="hidden" name="targetYear" value="${targetYear}">
+			<input type="hidden" name="targetMonth" value="${targetMonth}">
+			<input type="hidden" name="date" value="${date}">
+			<table class="table table-bordered">
+				<tr class="title">
+					<td>카테고리</td>
+					<td>날짜</td>
+					<td>금액</td>
+					<td class="w40">메모</td>
+					<td>작성일</td>
+					<td>수정일</td>
+					<td>&nbsp;</td>
 				</tr>
-				</c:forEach>
-		</table>	
+					<c:forEach var="c" items="${list}">
+					<input type="hidden" name="cashNo" value="${c.cashbookNo}">
+					<tr>
+						<td>${c.category}</td>
+						<td>${c.cashbookDate}</td>
+						<td>
+							<c:if test="${c.category == '수입'}">
+								<span style="color:#4380C8">+ <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
+							</c:if>
+							<c:if test="${c.category == '지출'}">
+								<span style="color:#D980C8">- <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
+							</c:if>
+						</td>
+						<td>${c.memo}</td>
+						<td>${fn:substring(c.createdate,0,11)}</td>
+						<td>${fn:substring(c.updatedate,0,11)}</td>
+						<td>
+							<button type="submit">삭제</button>
+						</td>
+					</tr>
+					</c:forEach>
+			</table>	
+		</form>
 	</div>
 	
 	<!-- 페이징  -->

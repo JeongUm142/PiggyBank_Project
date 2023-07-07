@@ -53,8 +53,4 @@ public class CashbookOneController extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/cashbookOne.jsp").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 }

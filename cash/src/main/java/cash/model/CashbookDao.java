@@ -102,7 +102,7 @@ public class CashbookDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT category, cashbook_date cashbookDate, price, memo, updatedate, createdate FROM cashbook WHERE member_id = ? AND YEAR(cashbook_date) = ? AND MONTH(cashbook_date) = ? AND DAY(cashbook_date) = ?";
+		String sql = "SELECT cashbook_no cashbookNo, category, cashbook_date cashbookDate, price, memo, updatedate, createdate FROM cashbook WHERE member_id = ? AND YEAR(cashbook_date) = ? AND MONTH(cashbook_date) = ? AND DAY(cashbook_date) = ?";
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -116,6 +116,7 @@ public class CashbookDao {
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Cashbook c = new Cashbook();
+				c.setCashbookNo(rs.getInt("cashbookNo"));
 				c.setCategory(rs.getString("category"));
 				c.setCashbookDate(rs.getString("cashbookDate"));
 				c.setPrice(rs.getInt("price"));
@@ -189,7 +190,7 @@ public class CashbookDao {
 			stmt.setInt(2, targetYear);
 			stmt.setInt(3, targetMonth);
 			stmt.setInt(4, date);
-				System.out.println(stmt + "<-stmt");
+				//System.out.println(stmt + "<-stmt");
 			rs = stmt.executeQuery();
 			if(rs.next()) {
 				spendTotalToday = rs.getInt("total");
@@ -312,6 +313,32 @@ public class CashbookDao {
 		}
 		return cashbookNo;
 	}
-	//수정
+	
 	//삭제
+	public int removeCash(int cashNo) {
+		int row = 0;
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "DELETE FROM cashbook WHERE cashbook_no = ?";
+	
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/Cash", "root", "java1234");
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, cashNo);
+				row = stmt.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					conn.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			return row;
+		}
 }

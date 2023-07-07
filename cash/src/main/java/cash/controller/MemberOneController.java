@@ -12,7 +12,7 @@ import cash.model.MemberDao;
 import cash.vo.Member;
 
 @WebServlet("/memberOne")
-public class memberOneController extends HttpServlet {
+public class MemberOneController extends HttpServlet {
 	@Override //부모가 가진 정보를 재정의
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// session 유효성 검사

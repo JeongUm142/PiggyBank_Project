@@ -15,14 +15,14 @@ import cash.vo.Member;
 
 @WebServlet("/addMember")
 public class AddMemberController extends HttpServlet {
-	
 	// addMember.jsp(회원가입)폼으로 갈때
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//세션 유효성 검사(로그인 x)
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginMember") != null) {
-			response.sendRedirect(request.getContextPath() + "/login");	
+			response.sendRedirect(request.getContextPath() + "/cashbook");	
+			return;
 		}
 			
 		// jsp페이지로 포어드(디스패치)
@@ -36,7 +36,7 @@ public class AddMemberController extends HttpServlet {
 		//세션 유효성 검사(로그인 x)
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginMember") != null) {
-			response.sendRedirect(request.getContextPath() + "/login");	
+			response.sendRedirect(request.getContextPath() + "/cashbook");	
 		}
 		
 		// 유효성검사 
@@ -49,7 +49,14 @@ public class AddMemberController extends HttpServlet {
 		// request.getParameter()
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
+		String memberPwRe = request.getParameter("memberPwRe");
 		Member member = new Member(memberId, memberPw, null, null);
+		
+		// 비밀번호 검사
+		if(!memberPw.equals(memberPwRe)) {
+			response.sendRedirect(request.getContextPath() + "/addMember");
+			return;
+		}
 		
 		// 회원가입 dao 호출
 		MemberDao memberDao = new MemberDao();
