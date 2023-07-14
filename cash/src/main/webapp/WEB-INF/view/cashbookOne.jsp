@@ -10,12 +10,12 @@
 <head>
 <meta charset="UTF-8">
 <title>상세보기</title>
-	<!-- css파일 -->
-	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
-	
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- css파일 -->
+	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <!-- 상단 -->
@@ -87,7 +87,7 @@
 				</tr>
 					<c:forEach var="c" items="${list}">
 					<input type="hidden" name="cashNo" value="${c.cashbookNo}">
-					<tr>
+					<tr class="center">
 						<td>${c.category}</td>
 						<td>${c.cashbookDate}</td>
 						<td>
@@ -102,14 +102,13 @@
 						<td>${fn:substring(c.createdate,0,11)}</td>
 						<td>${fn:substring(c.updatedate,0,11)}</td>
 						<td>
-							<button type="submit">삭제</button>
+							<button type="submit" class="btn btn-success">삭제</button>
 						</td>
 					</tr>
 					</c:forEach>
 			</table>	
 		</form>
 	</div>
-	
 	<!-- 페이징  -->
 </div>
 </body>
