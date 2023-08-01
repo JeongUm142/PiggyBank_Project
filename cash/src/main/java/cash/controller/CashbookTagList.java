@@ -25,6 +25,8 @@ public class CashbookTagList extends HttpServlet {
 		Member member = (Member)session.getAttribute("loginMember");
 		
 		String word = request.getParameter("word");
+		int targetYear = Integer.parseInt(request.getParameter("targetYear"));
+		int targetMonth = Integer.parseInt(request.getParameter("targetMonth"));
 		
 		//페이징 
 		int currentPage = 1;
@@ -36,10 +38,14 @@ public class CashbookTagList extends HttpServlet {
 		
 		HashtagDao hashtagDao = new HashtagDao();
 		List<Map<String, Object>> htList = hashtagDao.selectWordList(member.getMemberId());
+		List<Map<String, Object>> htListByMonth = hashtagDao.selectWordCountByMonth(member.getMemberId(), targetYear, targetMonth);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("word", word);
+		request.setAttribute("targetYear", targetYear);
+		request.setAttribute("targetMonth", targetMonth);
 		request.setAttribute("htList", htList);
+		request.setAttribute("htListByMonth", htListByMonth);
 		
 		request.getRequestDispatcher("/WEB-INF/view/cashbookTagList.jsp").forward(request, response);
 		

@@ -12,9 +12,11 @@
 <title>cashbookTagList</title>
 	<!-- css파일 -->
 	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
+	
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
@@ -36,15 +38,15 @@
 	<div class="taglist">#${word}</div>
 	<div class="taglist-hastag nonedeco">
 		<div>
-			<c:forEach var="m" items="${htList}">
+			<c:forEach var="m" items="${htListByMonth}">
 				<div>
-					<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}">#${m.word}(${m.cnt})</a>
+					<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}&targetYear=${targetYear}&targetMonth=${targetMonth}">#${m.word}(${m.cnt})</a>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
-	<div class="list">
-		<table class="table table-bordered table-hover">
+	<div class="tag list">
+		<table class="table table-bordered hover">
 			<thead>
 				<tr class="title">
 					<td class="w20">일자</td>
@@ -55,7 +57,7 @@
 			</thead>
 			<tbody>
 				<c:forEach var="c" items="${list}">
-					<tr onclick="hashlistClick('${fn:substring(c.cashbookDate,0,4)}', '${fn:substring(c.cashbookDate,6,7)}', '${fn:substring(c.cashbookDate,9,10)}')">
+					<tr class="hover" onclick="hashlistClick('${fn:substring(c.cashbookDate,0,4)}', '${fn:substring(c.cashbookDate,6,7)}', '${fn:substring(c.cashbookDate,9,10)}')">
 						<td>${c.cashbookDate}</td>
 						<td>
 							<c:if test="${c.category == '수입'}">

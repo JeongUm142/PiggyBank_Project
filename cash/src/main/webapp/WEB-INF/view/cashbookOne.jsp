@@ -10,12 +10,12 @@
 <head>
 <meta charset="UTF-8">
 <title>상세보기</title>
+	<!-- css파일 -->
+	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
+	
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	
-	<!-- css파일 -->
-	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <!-- 상단 -->
@@ -24,92 +24,109 @@
 	<a href="${pageContext.request.contextPath}/memberOne" class="btn btn-outline-success">회원정보</a>
 	<a href="${pageContext.request.contextPath}/cashbook?targetYear=${targetYear}&targetMonth=${targetMonth-1}" class="btn btn-outline-success">캘린더</a>
 </div>
-<!-- 해시태그 -->
-<div class="info">
-	<h3>#이달의 해시태그</h3>
-	<div class="hastag">
-		<c:forEach var="m" items="${htList}">
-			<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}">#${m.word}(${m.cnt})</a>
-		</c:forEach>
+<div class="con">
+	<div class="row">
+		<!-- 해시태그 -->
+		<div class="col-lg-2">
+			<div class="info">
+				<h3>#이달의 해시태그</h3>
+				<div class="hastag">
+					<c:forEach var="m" items="${htList}">
+						<ul>
+							<li>
+								<a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}&targetYear=${targetYear}&targetMonth=${targetMonth}">#${m.word}(${m.cnt})</a>
+							</li>
+						</ul>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-lg-8">	
+			<!-- 추가 -->
+			<div class="addtable">
+				<div class="title">${targetYear}년 ${targetMonth}월 ${date}일의 소비 내역을 입력해주세요!</div>
+				<form action="${pageContext.request.contextPath}/addCash" method="post">
+					<input type="hidden" name="targetYear" value="${targetYear}">
+					<input type="hidden" name="targetMonth" value="${targetMonth}">
+					<input type="hidden" name="date" value="${date}">
+					<table class="table">
+						<tr class="title">
+							<td>수입 / 지출</td>
+							<td>가격</td>
+							<td>메모</td>
+						</tr>
+						<tr>
+							<td>
+								<select name="category" class="form-check form-control">
+										<option>수입</option>
+										<option>지출</option>
+								</select>
+							</td>
+							<td><input type="number" name="price" class="form-check form-control" min="1" required="required"></td>
+							<td><input type="text" name="memo" placeholder="해시태그(#) 입력 가능" class="form-check form-control" required="required"></td>
+						</tr>
+					</table>
+					<button type="submit" class="btn btn-success">추가하기</button>
+				</form>
+			</div>
+			<!-- 리스트 -->
+			<div class="cashOne list">
+				<form action="${pageContext.request.contextPath}/removeCash" method="post">
+					<input type="hidden" name="targetYear" value="${targetYear}">
+					<input type="hidden" name="targetMonth" value="${targetMonth}">
+					<input type="hidden" name="date" value="${date}">
+					<table class="table table-bordered">
+						<tr class="title">
+							<td>카테고리</td>
+							<td class="w20">날짜</td>
+							<td class="w20">금액</td>
+							<td class="w40">메모</td>
+							<td>작성일</td>
+							<td>수정일</td>
+							<td>&nbsp;</td>
+						</tr>
+							<c:forEach var="c" items="${list}">
+							<input type="hidden" name="cashNo" value="${c.cashbookNo}">
+							<tr class="center">
+								<td>${c.category}</td>
+								<td>${c.cashbookDate}</td>
+								<td>
+									<c:if test="${c.category == '수입'}">
+										<span style="color:#4380C8">+ <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
+									</c:if>
+									<c:if test="${c.category == '지출'}">
+										<span style="color:#D980C8">- <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
+									</c:if>
+								</td>
+								<td>${c.memo}</td>
+								<td>${fn:substring(c.createdate,0,11)}</td>
+								<td>${fn:substring(c.updatedate,0,11)}</td>
+								<td>
+									<button type="submit" class="btn btn-success">삭제</button>
+								</td>
+							</tr>
+							</c:forEach>
+					</table>	
+				</form>
+			</div>
+			<!-- 페이징  -->
+			<div>
+			</div>
+		</div>
+		<!-- 수입/지출 -->
+		<div class="col-lg-2">
+			<div class="total">
+				<h3>오늘의 총 수입</h3>
+				<div style="color:#4380C8"><fmt:formatNumber value="${incomeTotalToday}" pattern="###,###,###"/>원</div>
+				<hr>
+				<h3>오늘의 총 지출</h3>
+				<div style="color:#D980C8"><fmt:formatNumber value="${spendTotalToday}" pattern="###,###,###"/>원</div>
+			</div>
+		</div>
+		
 	</div>
-</div>
-<!-- 수입/지출 -->
-<div class="total">
-	<h3>오늘의 총 수입</h3>
-	<div style="color:#4380C8"><fmt:formatNumber value="${incomeTotalToday}" pattern="###,###,###"/>원</div>
-	<hr>
-	<h3>오늘의 총 지출</h3>
-	<div style="color:#D980C8"><fmt:formatNumber value="${spendTotalToday}" pattern="###,###,###"/>원</div>
 </div>
 
-<div class="container center">	
-	<!-- 추가 -->
-	<div class="addtable">
-		<div class="title">${targetYear}년 ${targetMonth}월 ${date}일의 소비 내역을 입력해주세요!</div>
-		<form action="${pageContext.request.contextPath}/addCash" method="post">
-			<input type="hidden" name="targetYear" value="${targetYear}">
-			<input type="hidden" name="targetMonth" value="${targetMonth}">
-			<input type="hidden" name="date" value="${date}">
-			<table class="table">
-				<tr class="title">
-					<td>수입 / 지출</td>
-					<td>가격</td>
-					<td>메모</td>
-				</tr>
-				<tr>
-					<td>
-						<select name="category" class="form-check form-control">
-								<option>수입</option>
-								<option>지출</option>
-						</select>
-					</td>
-					<td><input type="number" name="price" class="form-check form-control" min="1" required="required"></td>
-					<td><input type="text" name="memo" placeholder="해시태그(#) 입력 가능" class="form-check form-control" required="required"></td>
-				</tr>
-			</table>
-			<button type="submit" class="btn btn-success">추가하기</button>
-		</form>
-	</div>
-	<div class="list">
-		<form action="${pageContext.request.contextPath}/removeCash" method="post">
-			<input type="hidden" name="targetYear" value="${targetYear}">
-			<input type="hidden" name="targetMonth" value="${targetMonth}">
-			<input type="hidden" name="date" value="${date}">
-			<table class="table table-bordered">
-				<tr class="title">
-					<td>카테고리</td>
-					<td>날짜</td>
-					<td>금액</td>
-					<td class="w40">메모</td>
-					<td>작성일</td>
-					<td>수정일</td>
-					<td>&nbsp;</td>
-				</tr>
-					<c:forEach var="c" items="${list}">
-					<input type="hidden" name="cashNo" value="${c.cashbookNo}">
-					<tr class="center">
-						<td>${c.category}</td>
-						<td>${c.cashbookDate}</td>
-						<td>
-							<c:if test="${c.category == '수입'}">
-								<span style="color:#4380C8">+ <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
-							</c:if>
-							<c:if test="${c.category == '지출'}">
-								<span style="color:#D980C8">- <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
-							</c:if>
-						</td>
-						<td>${c.memo}</td>
-						<td>${fn:substring(c.createdate,0,11)}</td>
-						<td>${fn:substring(c.updatedate,0,11)}</td>
-						<td>
-							<button type="submit" class="btn btn-success">삭제</button>
-						</td>
-					</tr>
-					</c:forEach>
-			</table>	
-		</form>
-	</div>
-	<!-- 페이징  -->
-</div>
 </body>
 </html>

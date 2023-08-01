@@ -39,8 +39,9 @@ public class CashbookOneController extends HttpServlet {
 		// 오늘의 전체 지출
 		int spendTotalToday = cashbookDao.sumSpendCashByToday(member.getMemberId(), targetYear, targetMonth, date);
 			System.out.println(spendTotalToday);
+		
 		HashtagDao hashtagDao = new HashtagDao();
-		List<Map<String, Object>> htList = hashtagDao.selectWordList(member.getMemberId());
+		List<Map<String, Object>> htList = hashtagDao.selectWordCountByMonth(member.getMemberId(), targetYear, targetMonth);
 		
 		request.setAttribute("targetYear", targetYear);
 		request.setAttribute("targetMonth", targetMonth);
