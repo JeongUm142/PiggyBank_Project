@@ -1,6 +1,8 @@
 package cash.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +31,6 @@ public class AddMemberController extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
 		
 	}
-	
 	// 회원가입 액션창
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,8 +42,14 @@ public class AddMemberController extends HttpServlet {
 		
 		// 유효성검사 
 		if(request.getParameter("memberId") == null 
-			|| request.getParameter("memberPw") == null) {
-			response.sendRedirect(request.getContextPath() + "/addMember");
+			|| request.getParameter("memberPw") == null
+			|| request.getParameter("memberPwRe") == null
+			|| request.getParameter("memberId").equals("")
+			|| request.getParameter("memberPw").equals("")
+			|| request.getParameter("memberPwRe").equals("")) {
+			String errorMsg = "아이디, 비밀번호를 입력해주세요.";
+			request.setAttribute("errorMsg", errorMsg);
+			request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
 			return;
 		}
 		
@@ -50,11 +57,16 @@ public class AddMemberController extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
 		String memberPwRe = request.getParameter("memberPwRe");
-		Member member = new Member(memberId, memberPw, null, null);
+		String idck = request.getParameter("idck");
 		
+		MemberDao memberdao = new MemberDao();
+		Member member = new Member(memberId, memberPw, null, null);
+
 		// 비밀번호 검사
 		if(!memberPw.equals(memberPwRe)) {
-			response.sendRedirect(request.getContextPath() + "/addMember");
+			String errorMsg = "비밀번호를 확인해주세요.";
+			request.setAttribute("errorMsg", errorMsg);
+			request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
 			return;
 		}
 		
@@ -63,10 +75,14 @@ public class AddMemberController extends HttpServlet {
 		int row = memberDao.insertMember(member);
 		if(row == 0) { // 실패시 회원가입으로
 			// addMember.jsp view를 이동하는 controller를 리다이렉트
-			response.sendRedirect(request.getContextPath() + "/addMember");
+			String errorMsg = "비밀번호를 확인해주세요.";
+			request.setAttribute("errorMsg", errorMsg);
+			request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
 		} else if(row == 1) {// 성공시
 			// login.jsp view를 이동하는 controller를 리다이렉트
-			response.sendRedirect(request.getContextPath() + "/login");	
+			String msg = "회원가입 성공! 로그인 해주세요.";
+			response.sendRedirect(request.getContextPath() + "/login?msg=" + URLEncoder.encode(msg, "UTF-8"));
+			return;
 		} else {
 			System.out.println("add member error");
 		}

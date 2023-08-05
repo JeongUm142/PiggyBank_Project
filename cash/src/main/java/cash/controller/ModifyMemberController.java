@@ -70,12 +70,18 @@ public class ModifyMemberController extends HttpServlet {
 		MemberDao memberDao = new MemberDao();
 		
 		int row = memberDao.modifyPassword(loginMember.getMemberId(), memberPw, memberUpdatePw);
-		
+		System.out.println(row + "row");
 		if(row == 1) {// 성공
 			System.out.println("수정 성공");
 			String msg = "비밀번호 변경으로 로그아웃됩니다.";
 			session.invalidate();
 			response.sendRedirect(request.getContextPath() + "/login?msg=" + URLEncoder.encode(msg, "UTF-8"));
+			return;
+		} else if(row == -1) { // 이전비밀번호와 동일
+			System.out.println("이전 비밀번호와 동일");
+			errorMsg = "최근에 사용한 비밀번호입니다. 다른 비밀번호를 입력해주세요.";
+			request.setAttribute("errorMsg", errorMsg); // msg 값을 request 객체에 설정
+			request.getRequestDispatcher("/WEB-INF/view/modifyPassword.jsp").forward(request, response);
 			return;
 		} else{ // 실패
 			System.out.println("수정 실패");

@@ -1,6 +1,7 @@
 package cash.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,11 +54,13 @@ public class AddCashController extends HttpServlet {
 			System.out.println(date + "<-date");
 			System.out.println(cashbookdate + "<-cashbookdate");
 
-		
 		// 유효성검사 
 		if(request.getParameter("price") == null 
-			|| request.getParameter("memo") == null) {
-			response.sendRedirect(request.getContextPath() + "/cashbookOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&date=" + date);
+			|| request.getParameter("memo") == null
+			|| request.getParameter("price").equals("")
+			|| request.getParameter("memo").equals("")) {
+			String errorMsg = "모든 값을 입력해주세요.";
+			response.sendRedirect(request.getContextPath() + "/cashbookOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&date=" + date + "&errorMsg=" + URLEncoder.encode(errorMsg, "UTF-8"));
 			return;
 		}
 		
@@ -118,9 +121,9 @@ public class AddCashController extends HttpServlet {
 			hashtag.setWord(s);
 			hashtagDao.insertHashtag(hashtag);
     }
-		
+		String msg = "수입/지출이 추가되었습니다!";
 		//redirect -> cashbookCon -> forward -> cashbook.jsp
-		response.sendRedirect(request.getContextPath() + "/cashbookOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&date=" + date);
+		response.sendRedirect(request.getContextPath() + "/cashbookOne?targetYear=" + targetYear + "&targetMonth=" + targetMonth + "&date=" + date + "&msg=" + URLEncoder.encode(msg, "UTF-8"));
 	}
 
 }

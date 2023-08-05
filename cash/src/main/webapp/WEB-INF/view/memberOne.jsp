@@ -4,24 +4,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>memberOne</title>
-</head>
+	<title>PiggyBank</title>
+	<link href="${pageContext.request.contextPath}/img/cashfavicon2.png" rel="icon">
+
 	<!-- css파일 -->
 	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
 	
-	<!-- Latest compiled and minified CSS -->
+	<!-- 부트스트랩 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script>
-	$(document).ready(function(){
-		if("${msg}" == "null") {
-			swal("경고", "ㅋ입력", "warning");
-		}else if("${msg}" != "null") {
-			swal("완료", "입력좀", "success");
-		}
-	});
-	</script>
+		
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	<!-- SweetAlert2 스타일시트와 스크립트 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+</head>
 <body>
 <!-- 상단 -->
 <div class="info-top">

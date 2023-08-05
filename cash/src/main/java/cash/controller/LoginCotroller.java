@@ -22,7 +22,7 @@ public class LoginCotroller extends HttpServlet {
     	HttpSession session = request.getSession();
     	if(session.getAttribute("loginMember") != null) {
     		response.sendRedirect(request.getContextPath() + "/cashbook");
-    		return;
+    		return; 
     	}
 		// 쿠키에 저장된 로그인 성공 id가 있다면 request속성에 저장
 		Cookie[] cookies = request.getCookies();
@@ -47,15 +47,16 @@ public class LoginCotroller extends HttpServlet {
 		MemberDao memberdao = new MemberDao();
 		Member loginMember = memberdao.selectMemberById(member);
 		
-		//null로 로그인실패
+		// null로 로그인실패
 		if(loginMember == null) {
 			System.out.println("로그인 실패");
-			String errorMsg = "아이디와 비밀번호를 입력해주세요.";
+			String errorMsg = "아이디와 비밀번호를 확인해주세요.";
+			request.setAttribute("errorMsg", errorMsg);
 			response.sendRedirect(request.getContextPath() + "/login?errorMsg=" + URLEncoder.encode(errorMsg, "UTF-8"));
 			return;
 		}
 		
-		//로그인 성공
+		// 로그인 성공
 		HttpSession session = request.getSession();
 		session.setAttribute("loginMember", loginMember);
 		String idSave = request.getParameter("idSave");
@@ -66,7 +67,9 @@ public class LoginCotroller extends HttpServlet {
 			loginIdCookie.setPath("/");
 			response.addCookie(loginIdCookie);
 		}
-		response.sendRedirect(request.getContextPath() + "/cashbook");
+		String msg = loginMember.getMemberId() + "님, 반갑습니다!";
+		
+		response.sendRedirect(request.getContextPath() + "/cashbook?msg=" + URLEncoder.encode(msg, "UTF-8"));
 		}
 
 }

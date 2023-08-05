@@ -35,7 +35,7 @@ public class MemberDao {
 		}
 		return row;
 	}
-	
+
 	// 로그인 메서드
 	public Member selectMemberById(Member paramMember) {
 		Member returnMember = null;
@@ -139,6 +139,8 @@ public class MemberDao {
 					stmt.setString(3, memberPw);
 					
 					row = stmt.executeUpdate();
+				} else{ // 비밀번호 존재
+					row = -1;
 				}
 			}
 		} catch(Exception e) {

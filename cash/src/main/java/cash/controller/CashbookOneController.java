@@ -18,6 +18,7 @@ import cash.vo.Member;
 
 @WebServlet("/cashbookOne")
 public class CashbookOneController extends HttpServlet {
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그인 유효성 검사
 		HttpSession session = request.getSession();	

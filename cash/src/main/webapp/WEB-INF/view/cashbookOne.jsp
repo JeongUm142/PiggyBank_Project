@@ -9,7 +9,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>상세보기</title>
+	<title>PiggyBank</title>
+	<link href="${pageContext.request.contextPath}/img/cashfavicon2.png" rel="icon">
 	<!-- css파일 -->
 	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
 	
@@ -34,7 +35,7 @@
 		var errorMsg = urlParams.get('errorMsg');
 	
 		// msg 값이 비어있지 않으면 SweetAlert2 경고 팝업 표시 -> 성공
-		if (msg != '') {
+		if (msg != null) {
 			const Toast = Swal.mixin({
 				toast: true,
 				position: 'center-center',
@@ -53,7 +54,7 @@
 			})
 		}
 		// 에러 
-		if (errorMsg != '') {
+		if (errorMsg != null) {
 			Swal.fire('Error!',errorMsg,'error');
 		}
       

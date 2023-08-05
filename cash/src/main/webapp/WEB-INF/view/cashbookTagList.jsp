@@ -9,7 +9,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>cashbookTagList</title>
+	<title>PiggyBank</title>
+	<link href="${pageContext.request.contextPath}/img/cashfavicon2.png" rel="icon">
 	<!-- css파일 -->
 	<link href="${pageContext.request.contextPath}/style.css" type="text/css" rel="stylesheet">
 	
