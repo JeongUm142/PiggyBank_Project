@@ -46,6 +46,12 @@
 	margin-top: 30px;
 	margin-bottom: 30px;
 }
+.main-title {
+	font-size: 40px;
+	font-weight: bold;
+	margin-top: 30px;
+	margin-bottom: 25px;
+}
 .form-wrapper {
 	display: flex;
 	justify-content: center;
@@ -60,6 +66,17 @@
 }
 .con .col-lg-2 {
 	margin-top: 200px;
+}
+/*알러트*/
+.swal2-styled.swal2-confirm {
+  padding: 7px 19px;
+  border-radius: 2px;
+  background-color: #07B875 !important;
+  font-size: 12px;
+  border: 1px solid #07B875 !important;
+}
+.swal2-styled.swal2-confirm:focus {
+	box-shadow : 0 0 0 3px rgba(176,199,173,.4) !important;
 }
 /*로그인, 회원가입 공통*/
 .login-join{

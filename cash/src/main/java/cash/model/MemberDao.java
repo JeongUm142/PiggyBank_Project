@@ -105,32 +105,58 @@ public class MemberDao {
 		return returnMember;
 	}
 	
-	// 회원정보 수정
-	public int modifyMember(String memberId, String memberUpdatePw) {
+	// 비밀번호 수정
+	public int modifyPassword(String memberId, String memberPw, String memberUpdatePw) {
 		int row = 0;
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "UPDATE member SET member_pw = PASSWORD(?) WHERE member_id=?";
-		
+		ResultSet rs = null;
+
+	    String selectSql = "SELECT count(*) cnt FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
+	    String updateSql = "UPDATE member SET member_pw = PASSWORD(?) WHERE member_id = ? AND member_pw = PASSWORD(?)";
+
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/Cash", "root", "java1234");
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, memberUpdatePw);
-			stmt.setString(2, memberId);
-			row = stmt.executeUpdate();
 			
+			// 조회 시작
+			stmt = conn.prepareStatement(selectSql);
+			stmt.setString(1, memberId);
+			stmt.setString(2, memberUpdatePw);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				int count = rs.getInt("cnt");
+				if(count == 0) {
+					stmt.close();
+					rs.close();
+					
+					// count가 0이면 변경할 비밀번호와 일치하는 비밀번호가 없음으로 업데이트 진행
+					stmt = conn.prepareStatement(updateSql);
+					stmt.setString(1, memberUpdatePw);
+					stmt.setString(2, memberId);
+					stmt.setString(3, memberPw);
+					
+					row = stmt.executeUpdate();
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				stmt.close();
+				if(rs != null) {
+					rs.close();
+				}
+				if(stmt != null) {
+					stmt.close();
+				}
 				conn.close();
 			} catch(Exception e2) {
 				e2.printStackTrace();
 			}
 		}
+		
 		return row;
 	}
 	

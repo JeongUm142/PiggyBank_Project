@@ -14,6 +14,7 @@ import cash.vo.Member;
 @WebServlet("/memberOne")
 public class MemberOneController extends HttpServlet {
 	@Override //부모가 가진 정보를 재정의
+	// doget은 /memberOne를 주소창에서 검색해서 들어갈 수 있기 위해서 사용
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// session 유효성 검사
 		HttpSession session = request.getSession();	

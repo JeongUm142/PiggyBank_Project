@@ -51,6 +51,7 @@ public class CashbookDao {
 		}
 		return list;
 	}
+	
 	// 캐시북에 있는 메모를 해시태그 클릭시 출력
 	public List<Cashbook> selectCashbookListByTag(String memberId, String word, int beginRow, int rowPerPage) {
 		
@@ -138,6 +139,7 @@ public class CashbookDao {
 		}
 		return list;
 	}
+	
 	//오늘 수입
 	public int sumIncomeCashByToday(String memberId, int targetYear, int targetMonth, int date) {
 		int incomeTotalToday = 0;
@@ -173,6 +175,7 @@ public class CashbookDao {
 		}
 		return incomeTotalToday;
 	}
+	
 	//오늘 지출
 	public int sumSpendCashByToday(String memberId, int targetYear, int targetMonth, int date) {
 		int spendTotalToday = 0;
@@ -208,6 +211,7 @@ public class CashbookDao {
 		}
 		return spendTotalToday;
 	}
+	
 	//이번달 수입
 	public int sumIncomeCashByMonth(String memberId, int targetYear, int targetMonth) {
 		int incomeTotal = 0;
@@ -242,6 +246,7 @@ public class CashbookDao {
 		}
 		return incomeTotal;
 	}
+	
 	//이번달 지출
 	public int sumSpendCashByMonth(String memberId, int targetYear, int targetMonth) {
 		int spendTotal = 0;
@@ -315,20 +320,20 @@ public class CashbookDao {
 	}
 	
 	//삭제
-	public int removeCash(int cashNo) {
+	public int removeCash(int cashbookNo, String memberId) {
 		int row = 0;
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "DELETE FROM cashbook WHERE cashbook_no = ?";
+		String sql = "DELETE FROM cashbook WHERE cashbook_no = ? AND member_id = ?";
 	
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/Cash", "root", "java1234");
 				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, cashNo);
+				stmt.setInt(1, cashbookNo);
+				stmt.setString(2, memberId);
 				row = stmt.executeUpdate();
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {

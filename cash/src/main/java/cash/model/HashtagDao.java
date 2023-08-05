@@ -6,6 +6,7 @@ import java.util.*;
 import cash.vo.Hashtag;
 
 public class HashtagDao {
+	// 추가
 	public int insertHashtag(Hashtag hashtag) {
 		int row = 0;
 		
@@ -35,6 +36,7 @@ public class HashtagDao {
 		return row;
 	}
 	
+	// 달별 해시태그
 	public List<Map<String, Object>> selectWordCountByMonth(String memberId, int targetYear, int targetMonth){
 		List<Map<String, Object>> list = new ArrayList<>();
 		
@@ -72,6 +74,7 @@ public class HashtagDao {
 		return list;
 	}
 	
+	// 전체 해시태그
 	public List<Map<String, Object>> selectWordList(String memberId){
 		List<Map<String, Object>> list = new ArrayList<>();
 		

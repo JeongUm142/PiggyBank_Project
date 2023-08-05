@@ -39,8 +39,8 @@
 		</div>
 		<!-- 캘린더 -->
 		<div class="col-lg-8">
-			<div class="center title">
-				${targetYear}년 ${targetMonth+1}월 캘린더
+			<div class="center main-title">
+				${targetYear}년 ${targetMonth+1}월
 			</div>
 			<div class="arrow nonedeco center">
 				<a href="${pageContext.request.contextPath}/cashbook?targetYear=${targetYear}&targetMonth=${targetMonth - 1}" class="arrow-left">
@@ -82,24 +82,31 @@
 			        			</tr><tr class="serve">
 			   				</c:if>
 							
-							<!--i-beginBlank+1가 1보다 작거나(0~-i) , i-beginBlank+1가 마지막날보다 큰 경우 공백 -->
+							<!--i-beginBlank+1가 1보다 작거나(0~-i) , i-beginBlank+1가 마지막날보다 큰 경우 이전달 숫자 -->
 							<c:if test="${date < 1 || date > lastDate}">
-								<td></td>
+								<c:set var="textColorGray" value="#999"></c:set>
+								<c:if test="${date < 1}">
+									<td style="color:${textColorGray}" onclick="moveToOne('${pageContext.request.contextPath}/cashbookOne?targetYear=${targetYear}&targetMonth=${targetMonth}&date=${preEndDate + date}')">${preEndDate + date}</td>
+								</c:if>
+						
+								<c:if test="${date > 1}">
+									<td style="color:${textColorGray}" onclick="moveToOne('${pageContext.request.contextPath}/cashbookOne?targetYear=${targetYear}&targetMonth=${targetMonth+2}&date=${date - lastDate}')">${date - lastDate}</td>
+								</c:if>
 							</c:if>
 							
 							<c:if test="${!(date < 1 || date > lastDate)}">
 								<!-- 토,일,오늘 폰트색상 및 배경 변수 생성 -->
 								<c:set var="textColor" value=""></c:set>
-								<c:set var="backColor" value=""></c:set>
+								<c:set var="border" value=""></c:set>
 								<c:set var="textWeight" value=""></c:set>
 										
 								<!-- 오늘 --> <!-- 배경색을 위해 위에 생성 -->
 								<c:if test="${date == todayDate && targetMonth == todayMonth && targetYear == todayYear}">
-									<c:set var="backColor" value="3px solid #B0C7AD"></c:set>
+									<c:set var="border" value="3px solid #B0C7AD"></c:set>
 									<c:set var="textWeight" value="bold"></c:set>
 								</c:if>
 								
-								<td style="border: ${backColor}" onclick="moveToOne('${pageContext.request.contextPath}/cashbookOne?targetYear=${targetYear}&targetMonth=${targetMonth+1}&date=${date}')">
+								<td style="border: ${border}" onclick="moveToOne('${pageContext.request.contextPath}/cashbookOne?targetYear=${targetYear}&targetMonth=${targetMonth+1}&date=${date}')">
 									<div>
 										<!-- 토요일 -->
 										<c:if test="${i % 7 == 6}">
@@ -130,8 +137,12 @@
 												</div>
 											</c:if>
 										</c:forEach>
+										
 									</div>
 								</td>
+								
+		
+								
 							</c:if>
 						</c:forEach>
 					</tr>

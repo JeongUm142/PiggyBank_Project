@@ -16,6 +16,49 @@
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/litera/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+	<!-- SweetAlert2 스타일시트와 스크립트 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	
+	<script>
+	$(document).ready(function(){
+		// URLSearchParams 객체를 사용하여 주소창의 값 가져오기
+		const urlParams = new URLSearchParams(window.location.search);
+
+        // msg가 주소창에 있으면 가져와서 출력
+		var msg = urlParams.get('msg');
+		var errorMsg = urlParams.get('errorMsg');
+	
+		// msg 값이 비어있지 않으면 SweetAlert2 경고 팝업 표시 -> 성공
+		if (msg != '') {
+			const Toast = Swal.mixin({
+				toast: true,
+				position: 'center-center',
+				showConfirmButton: false,
+				timer: 1000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+			
+			Toast.fire({
+				icon: 'success',
+				title: msg
+			})
+		}
+		// 에러 
+		if (errorMsg != '') {
+			Swal.fire('Error!',errorMsg,'error');
+		}
+      
+	});
+	</script>
 </head>
 <body>
 <!-- 상단 -->
@@ -46,7 +89,7 @@
 			<!-- 추가 -->
 			<div class="addtable">
 				<div class="title">${targetYear}년 ${targetMonth}월 ${date}일의 소비 내역을 입력해주세요!</div>
-				<form action="${pageContext.request.contextPath}/addCash" method="post">
+				<form action="${pageContext.request.contextPath}/addCash" method="post" id="yourForm">
 					<input type="hidden" name="targetYear" value="${targetYear}">
 					<input type="hidden" name="targetMonth" value="${targetMonth}">
 					<input type="hidden" name="date" value="${date}">
@@ -63,11 +106,11 @@
 										<option>지출</option>
 								</select>
 							</td>
-							<td><input type="number" name="price" class="form-check form-control" min="1" required="required"></td>
-							<td><input type="text" name="memo" placeholder="해시태그(#) 입력 가능" class="form-check form-control" required="required"></td>
+							<td><input type="number" name="price" class="form-check form-control" min="1"></td>
+							<td><input type="text" name="memo" placeholder="해시태그(#) 입력 가능" class="form-check form-control"></td>
 						</tr>
 					</table>
-					<button type="submit" class="btn btn-success">추가하기</button>
+					<button type="submit" class="btn btn-success" id="toastStart">추가하기</button>
 				</form>
 			</div>
 			<!-- 리스트 -->
@@ -87,7 +130,7 @@
 							<td>&nbsp;</td>
 						</tr>
 							<c:forEach var="c" items="${list}">
-							<input type="hidden" name="cashNo" value="${c.cashbookNo}">
+							
 							<tr class="center">
 								<td>${c.category}</td>
 								<td>${c.cashbookDate}</td>
@@ -98,12 +141,13 @@
 									<c:if test="${c.category == '지출'}">
 										<span style="color:#D980C8">- <fmt:formatNumber value="${c.price}" pattern="###,###,###"/></span>
 									</c:if>
-								</td>
+								</td>	
 								<td>${c.memo}</td>
 								<td>${fn:substring(c.createdate,0,11)}</td>
 								<td>${fn:substring(c.updatedate,0,11)}</td>
 								<td>
-									<button type="submit" class="btn btn-success">삭제</button>
+									<!-- list내 여러 cashbookNo중에 내가 선택한 값이 넘어가도록 설정 -->
+									<button type="submit" name="cashNo" value="${c.cashbookNo}" class="btn btn-success">삭제</button>
 								</td>
 							</tr>
 							</c:forEach>

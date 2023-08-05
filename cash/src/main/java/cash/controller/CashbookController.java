@@ -75,6 +75,14 @@ public class CashbookController extends HttpServlet {
 		int totalCell = beginBlank + lastDate + endBlank;
 			System.out.println(totalCell + "<-totalCell");
 			
+		// 전월 마지막 일 구하기
+		Calendar preDate = Calendar.getInstance();
+		
+		preDate.set(Calendar.YEAR, targetYear);
+		preDate.set(Calendar.MONTH, targetMonth - 1);
+		
+		int preEndDate = preDate.getActualMaximum(Calendar.DATE);
+		
 		// 모델을 호출(DAO 타켓 월의 수업/지출 데이터
 		CashbookDao cashbookDao = new CashbookDao();
 		List<Cashbook> list = cashbookDao.selectCashbookListByMonth(member.getMemberId(), targetYear, targetMonth + 1);
@@ -101,6 +109,7 @@ public class CashbookController extends HttpServlet {
 		request.setAttribute("htList", htList);
 		request.setAttribute("incomeTotal", incomeTotal);
 		request.setAttribute("spendTotal", spendTotal);
+		request.setAttribute("preEndDate", preEndDate);
 		
 		// 이번달 달력에 가계부목록의 모델값을 셋팅
     	request.getRequestDispatcher("/WEB-INF/view/cashbook.jsp").forward(request, response);

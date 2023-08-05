@@ -1,6 +1,7 @@
 package cash.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,7 +50,8 @@ public class LoginCotroller extends HttpServlet {
 		//null로 로그인실패
 		if(loginMember == null) {
 			System.out.println("로그인 실패");
-			response.sendRedirect(request.getContextPath() + "/login");
+			String errorMsg = "아이디와 비밀번호를 입력해주세요.";
+			response.sendRedirect(request.getContextPath() + "/login?errorMsg=" + URLEncoder.encode(errorMsg, "UTF-8"));
 			return;
 		}
 		
@@ -60,7 +62,7 @@ public class LoginCotroller extends HttpServlet {
 			System.out.println(idSave);
 		if(idSave != null){
 			Cookie loginIdCookie = new Cookie("loginMember", memberId); // 맵의 한 종류로 프로포티즈의 자식
-			loginIdCookie.setMaxAge(60); // 초단위로 계산값을 적어야함/ 결과 XX
+			loginIdCookie.setMaxAge(600); // 초단위로 계산값을 적어야함/ 결과 XX
 			loginIdCookie.setPath("/");
 			response.addCookie(loginIdCookie);
 		}
