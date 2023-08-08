@@ -92,6 +92,7 @@
 					</tr>
 				</table>
 				<br>
+				<h5>ID : user1, PW : 1234</h5>
 			</form>
 		</div>
 	</div>
