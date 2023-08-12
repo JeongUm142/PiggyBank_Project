@@ -14,15 +14,36 @@ public class MemberDao {
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Member(member_id, member_pw, createdate, updatedate) VALUE(?, password(?), now(), now())";
+		ResultSet rs = null;
+		
+		String selectSql = "SELECT count(*) cnt FROM member WHERE member_id = ?";
+		String insertSql = "INSERT INTO Member(member_id, member_pw, createdate, updatedate) VALUE(?, password(?), now(), now())";
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/Cash", "root", "java1234");
-			stmt = conn.prepareStatement(sql);
+			// 조회 시작
+			stmt = conn.prepareStatement(selectSql);
 			stmt.setString(1, member.getMemberId());
-			stmt.setString(2, member.getMemberPw());
-			row = stmt.executeUpdate();
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				int count = rs.getInt("cnt");
+				if(count == 0) {
+					stmt.close();
+					rs.close();
+					
+					// count가 0이면 일치하는 아이디가 없음으로 추가 진행
+					stmt = conn.prepareStatement(insertSql);
+					
+					stmt.setString(1, member.getMemberId());
+					stmt.setString(2, member.getMemberPw());
+					
+					row = stmt.executeUpdate();
+				} else{ // 아이디 존재
+					row = -1;
+				}
+			}
 		} catch(Exception e){
 			e.printStackTrace();
 		} finally {
