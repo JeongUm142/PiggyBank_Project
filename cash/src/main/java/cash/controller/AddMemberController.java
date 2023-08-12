@@ -23,7 +23,7 @@ public class AddMemberController extends HttpServlet {
 		//세션 유효성 검사(로그인 x)
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginMember") != null) {
-			response.sendRedirect(request.getContextPath() + "/cashbook");	
+			response.sendRedirect(request.getContextPath() + "/login");	
 			return;
 		}
 			
@@ -82,6 +82,13 @@ public class AddMemberController extends HttpServlet {
 			// login.jsp view를 이동하는 controller를 리다이렉트
 			String msg = "회원가입 성공! 로그인 해주세요.";
 			response.sendRedirect(request.getContextPath() + "/login?msg=" + URLEncoder.encode(msg, "UTF-8"));
+			return;
+		} else if(row == -1) {
+			// addMember.jsp view를 이동하는 controller를 리다이렉트
+			System.out.println("이미 존재하는 아이디");
+			String errorMsg ="이미 존재하는 아이디입니다. 다른 아이디를 사용해주세요.";
+			request.setAttribute("errorMsg", errorMsg); 
+			request.getRequestDispatcher("/WEB-INF/view/addMember.jsp").forward(request, response);
 			return;
 		} else {
 			System.out.println("add member error");
