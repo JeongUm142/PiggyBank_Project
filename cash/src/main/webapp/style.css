@@ -138,45 +138,51 @@
 }
 
 /*회원정보 및 비밀번호 수정*/
-.myPage{
-	margin: 180px auto;	
+.mypage{
+	margin-top: 150px;	
 }
-.myPage h1{
+.mypage h1{
+	margin-top: 10px;	
 	margin-bottom: 40px;
 }
-.profile{
-	display: flex;
-	flex-wrap: wrap;
-	position: relative;
+.profile {
+	width: 400px;
+	height: 550px;
+	margin-left: 100px;
+	padding-top: 40px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.profile img:first-child {
+	margin-top: -100px;
+	width: 55px;
 }
 .profile img{
 	width: 200px;
 }
-.profile > div {
-	display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: calc(50% - 250px);
-    width: 500px;
-}
 .profile .title{
-	width: 500px;
-	text-align: center;
-	justify-content: center;
-	align-items: center;
 	font-size: 40px;
 	font-weight: bold;
 	margin-top: 20px;
 }
+.chart {
+	width: 600px;
+	height: 550px;
+	padding-top: 40px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.chart > img {
+	margin-top: -100px;
+	width: 55px;
+}
+.chart .arrow {
+	margin-right: 30px;
+}
 .password{
 	font-size: 20px;
-	text-align: right;
 }
 .password div a{
 	width: 130px;
-	color:#333;
+	color: #333;
 }
 .password > div a + a {
 	margin-left: 10px;
@@ -321,14 +327,14 @@
 	width: 155px;
 }
 
-/*홈 해시태그*/
+/*홈 해시태그(왼쪽정렬)*/
 .tag table tbody tr:hover td{
 	background-color: #D2EDCE;
 }
 .hastag{
 	justify-content: center;
 	overflow-y: auto;
-	height: 500px;
+	height: 340px;
 }
 .hastag a{
 	width: 200px;
@@ -346,14 +352,17 @@
 	padding-left: 0;
 	list-style: none;
 }
-.col-lg-2 div h3 {
-	margin-top: 10px;
+.col-lg-2 .info h3 {
+	margin-top: 50px;
 }
 
 /*수입, 지출(오른쪽 정렬)*/
 .total{
-	margin-top: 150px;
+	margin-top: 50px;
 	height: 300px;
+}
+.total h3 {
+	margin-top: 10px;
 }
 .total div{
 	font-size: 30px;

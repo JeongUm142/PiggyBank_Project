@@ -72,7 +72,7 @@
 				<div class="hastag">
 					<c:forEach var="m" items="${htList}">
 						<ul>
-							<li><a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}&targetYear=${targetYear}&targetMonth=${targetMonth}">#${m.word}(${m.cnt})</a></li>
+							<li><a href="${pageContext.request.contextPath}/cashbookTagList?word=${m.word}&targetYear=${targetYear}&targetMonth=${targetMonth+1}">#${m.word}(${m.cnt})</a></li>
 						</ul>
 					</c:forEach>
 				</div>
@@ -181,9 +181,6 @@
 										
 									</div>
 								</td>
-								
-		
-								
 							</c:if>
 						</c:forEach>
 					</tr>

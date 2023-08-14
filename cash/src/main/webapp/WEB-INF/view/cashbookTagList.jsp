@@ -58,7 +58,7 @@
 			</thead>
 			<tbody>
 				<c:forEach var="c" items="${list}">
-					<tr class="hover" onclick="hashlistClick('${fn:substring(c.cashbookDate,0,4)}', '${fn:substring(c.cashbookDate,6,7)}', '${fn:substring(c.cashbookDate,9,10)}')">
+					<tr class="hover" onclick="hashlistClick('${fn:substring(c.cashbookDate,0,4)}', '${fn:substring(c.cashbookDate,6,7)}', '${fn:substring(c.cashbookDate,8,10)}')">
 						<td>${c.cashbookDate}</td>
 						<td>
 							<c:if test="${c.category == '수입'}">

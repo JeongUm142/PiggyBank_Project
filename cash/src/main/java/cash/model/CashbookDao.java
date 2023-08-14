@@ -52,15 +52,15 @@ public class CashbookDao {
 		return list;
 	}
 	
-	// 캐시북에 있는 메모를 해시태그 클릭시 출력
-	public List<Cashbook> selectCashbookListByTag(String memberId, String word, int beginRow, int rowPerPage) {
+	// 캐시북에 있는 해시태그 클릭시 출력
+	public List<Cashbook> selectCashbookListByTag(String memberId, String word, int targetYear, int targetMonth) {
 		
 		List<Cashbook> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT c.cashbook_no cashbookNo, c.category, c.cashbook_date cashbookDate, c.price, c.memo FROM cashbook c  INNER JOIN hashtag h ON c.cashbook_no = h.cashbook_no WHERE c.member_id = ? AND h.word = ? ORDER BY c.cashbook_date DESC LIMIT ?, ?";
+		String sql = "SELECT c.cashbook_no cashbookNo, c.category, c.cashbook_date cashbookDate, c.price, c.memo FROM cashbook c INNER JOIN hashtag h ON c.cashbook_no = h.cashbook_no WHERE c.member_id = ? AND h.word = ? AND YEAR(c.cashbook_date) = ? AND MONTH(c.cashbook_date) = ? ORDER BY c.cashbook_date DESC";
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -68,8 +68,8 @@ public class CashbookDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, memberId);
 			stmt.setString(2, word);
-			stmt.setInt(3, beginRow);
-			stmt.setInt(4, rowPerPage);
+			stmt.setInt(3, targetYear);
+			stmt.setInt(4, targetMonth);
 				System.out.println(stmt + "<-stmt");
 			rs = stmt.executeQuery();
 			while(rs.next()) {
@@ -210,6 +210,46 @@ public class CashbookDao {
 			}
 		}
 		return spendTotalToday;
+	}
+	
+	// 이번달 수입 지출 리스트
+	public List<Map<String, Object>>sumCashByMonth(String memberId, int targetYear, int targetMonth) {
+		List<Map<String, Object>> categoryTotals = new ArrayList<>();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT category, SUM(price) total FROM cashbook WHERE member_id = ? AND YEAR(cashbook_date) = ? AND MONTH(cashbook_date) = ? GROUP BY category";
+
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/Cash", "root", "java1234");
+			stmt = conn.prepareStatement(sql);
+			System.out.println(stmt + "<-stmt");
+			stmt.setString(1, memberId);
+			stmt.setInt(2, targetYear);
+			stmt.setInt(3, targetMonth);
+			
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("category", rs.getString("category"));
+				map.put("price", rs.getString("total"));
+				
+				categoryTotals.add(map);
+	        }
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			try { // close는 역순
+				rs.close();
+				stmt.close();
+				conn.close();
+			} catch(Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return categoryTotals;
 	}
 	
 	//이번달 수입

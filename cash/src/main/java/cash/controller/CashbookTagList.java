@@ -29,13 +29,8 @@ public class CashbookTagList extends HttpServlet {
 		int targetYear = Integer.parseInt(request.getParameter("targetYear"));
 		int targetMonth = Integer.parseInt(request.getParameter("targetMonth"));
 		
-		//페이징 
-		int currentPage = 1;
-		int rowPerPage = 10;
-		int beginRow = 0;
-		
 		CashbookDao cashbookDao = new CashbookDao();
-		List<Cashbook> list = cashbookDao.selectCashbookListByTag(member.getMemberId(), word, beginRow, rowPerPage);
+		List<Cashbook> list = cashbookDao.selectCashbookListByTag(member.getMemberId(), word, targetYear, targetMonth);
 		
 		HashtagDao hashtagDao = new HashtagDao();
 		List<Map<String, Object>> htList = hashtagDao.selectWordList(member.getMemberId());
