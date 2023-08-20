@@ -79,9 +79,9 @@
 						</td>	
 					</tr>
 				</table>
-			  
 			</form>
-		</div>
+		</div>	
+		<jsp:include page="/inc/copyright.jsp"></jsp:include>		
 	</div>
 </div>
 </body>

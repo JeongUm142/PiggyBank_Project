@@ -167,9 +167,9 @@
 				<div style="color:#D980C8"><fmt:formatNumber value="${spendTotalToday}" pattern="###,###,###"/>원</div>
 			</div>
 		</div>
+		<jsp:include page="/inc/copyright.jsp"></jsp:include>
 		
 	</div>
 </div>
-
 </body>
 </html>

@@ -126,5 +126,6 @@
 		</div>
 	</div>
 </div>
+<jsp:include page="/inc/copyright.jsp"></jsp:include>
 </body>
 </html>
